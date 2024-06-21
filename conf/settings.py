@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
 
     # API framework
+    'drf_yasg',
     'rest_framework',
 
     # django app
