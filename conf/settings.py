@@ -45,6 +45,9 @@ INSTALLED_APPS = [
 
     # django app
     'bookss',
+    'authors',
+    'users',
+
 ]
 
 MIDDLEWARE = [
