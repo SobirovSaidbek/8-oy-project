@@ -4,8 +4,8 @@ from django.db import models
 class UsersModel(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    email = models.EmailField()
-    phone_number = models.IntegerField()
+    email = models.EmailField(unique=True)
+    phone_number = models.CharField(max_length=13, unique=True)
     age = models.SmallIntegerField()
 
     created_at = models.DateTimeField(auto_now_add=True)

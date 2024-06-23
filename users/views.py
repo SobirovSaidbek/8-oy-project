@@ -4,7 +4,7 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from users.models import UsersModel
-from users.serializers import UsersModelSerializer
+from users.serializers import UsersModelSerializer, UsersSerializer
 
 
 class UsersListAPIView(APIView):
@@ -42,7 +42,7 @@ class UsersDetailAPIView(APIView):
 
 class UsersCreateAPIView(APIView):
     def post(self, request):
-        serializer = UsersModelSerializer(data=request.data)
+        serializer = UsersSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             response = {
@@ -75,6 +75,25 @@ class UsersUpdateAPIView(APIView):
             }
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
+    def patch(self, pk,  request):
+        user = get_object_or_404(UsersModel, pk=pk)
+        serializer = UsersModelSerializer(user, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            response = {
+                'success': True,
+                'message': 'User updated successfully',
+                'user': serializer.data
+            }
+
+            return Response(response, status=status.HTTP_200_OK)
+
+        else:
+            response = {
+                'success': False,
+                'message': 'User NO Updated'
+            }
+            return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
 class UsersDeleteAPIView(APIView):
     def delete(self, request, pk):
